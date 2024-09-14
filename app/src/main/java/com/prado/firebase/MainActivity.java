@@ -43,7 +43,7 @@ public class MainActivity extends AppCompatActivity {
             Log.i("CreaterUser","Usuario não esta logado!");
         }
         /* Cadastro de usuario para autenticação */
-       /* authUser.createUserWithEmailAndPassword("chico@gmail.com","a12345")
+        authUser.createUserWithEmailAndPassword("chico@gmail.com","a12345")
                 .addOnCompleteListener(MainActivity.this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
@@ -53,7 +53,7 @@ public class MainActivity extends AppCompatActivity {
                             Log.i("CreaterUser","Erro ao cadastrar usuario!");
                         }
                     }
-                });*/
+                });
 
        /*
         DatabaseReference usuarios = reference.child("usuarios");
