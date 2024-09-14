@@ -10,6 +10,10 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -21,7 +25,7 @@ import java.util.Objects;
 public class MainActivity extends AppCompatActivity {
 
     private DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
-
+    private FirebaseAuth authUser = FirebaseAuth.getInstance();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,6 +36,26 @@ public class MainActivity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+        /* Verificar se o usuario esta logado */
+        if(authUser.getCurrentUser() != null){
+            Log.i("CreaterUser","Usuario logado!");
+        }else {
+            Log.i("CreaterUser","Usuario não esta logado!");
+        }
+        /* Cadastro de usuario para autenticação */
+       /* authUser.createUserWithEmailAndPassword("chico@gmail.com","a12345")
+                .addOnCompleteListener(MainActivity.this, new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (task.isSuccessful()){
+                            Log.i("CreaterUser","Sucesso ao cadastrar usuario!");
+                        }else {
+                            Log.i("CreaterUser","Erro ao cadastrar usuario!");
+                        }
+                    }
+                });*/
+
+       /*
         DatabaseReference usuarios = reference.child("usuarios");
         usuarios.addValueEventListener(new ValueEventListener() {
             @Override
@@ -55,7 +79,7 @@ public class MainActivity extends AppCompatActivity {
             public void onCancelled(@NonNull DatabaseError error) {
 
             }
-        });
+        });*/
 
         //reference.child("pontos").setValue("300");
        // reference.child("usuarios2").child("001").child("nome").setValue("Priscila");
