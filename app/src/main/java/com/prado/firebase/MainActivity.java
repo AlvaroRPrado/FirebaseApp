@@ -37,25 +37,32 @@ public class MainActivity extends AppCompatActivity {
             return insets;
         });
 
+        DatabaseReference usuarios = reference.child("usuarios");
+        Usuario usuario = new Usuario();
+        usuario.setName("Alvaro");
+        usuario.setLastname("Prado");
+        usuario.setIdade(38);
+        usuarios.push().setValue(usuario);
+
         /* Deslogar o usuario */
-        authUser.signOut();
+       // authUser.signOut();
 
         /* Logar usuario */
-        authUser.signInWithEmailAndPassword("chico@gmail.com" , "a12345")
+       /* authUser.signInWithEmailAndPassword("chico@gmail.com" , "a12345")
                 .addOnCompleteListener(MainActivity.this, task -> {
                     if (task.isSuccessful()){
                         Log.i("SignUser"," Usuario logado com sucesso!");
                     }else {
                         Log.i("SignUser","Erro ao logar usuario!");
                     }
-                });
+                });*/
 
         /* Verificar se o usuario esta logado */
-        if(authUser.getCurrentUser() != null){
+       /* if(authUser.getCurrentUser() != null){
             Log.i("CurrentUser","Usuario logado!");
         }else {
             Log.i("CurrentUser","Usuario não esta logado!");
-        }
+        }*/
 
         /* Cadastro de usuario para autenticação */
        /* authUser.createUserWithEmailAndPassword("chico@gmail.com","a12345")
