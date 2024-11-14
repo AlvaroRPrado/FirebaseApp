@@ -18,14 +18,15 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.Objects;
 
 public class MainActivity extends AppCompatActivity {
 
-    private DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
-    private FirebaseAuth authUser = FirebaseAuth.getInstance();
+    private final DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
+    private final FirebaseAuth authUser = FirebaseAuth.getInstance();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,12 +38,54 @@ public class MainActivity extends AppCompatActivity {
             return insets;
         });
 
-        DatabaseReference usuarios = reference.child("usuarios");
-        Usuario usuario = new Usuario();
-        usuario.setName("Alvaro");
+       DatabaseReference usuarios = reference.child("usuarios");
+
+       //DatabaseReference usuarioPesquisa = usuarios.child("-OBegLV0THmFYNggs5z9");
+
+       // Query usuarioPesquisa = usuarios.orderByChild("name").equalTo("Alvaro");
+        //Query usuarioPesquisa = usuarios.orderByKey().limitToFirst(2);
+        //Query usuarioPesquisa = usuarios.orderByKey().limitToLast(3);
+
+        /* Maior ou igual (>=)*/
+        //Query usuarioPesquisa = usuarios.orderByChild("idade").startAt(35);
+
+        /* Menor ou igual (<=)*/
+       // Query usuarioPesquisa = usuarios.orderByChild("idade").endAt(30);
+
+        /*Entre dois valores */
+       // Query usuarioPesquisa = usuarios.orderByChild("idade")
+             //   .startAt(18)
+             //   .endAt(30);
+
+        /*Entre palavras */
+        //Query usuarioPesquisa = usuarios.orderByChild("name")
+         //       .startAt("G")
+         //       .endAt("Q");
+        Query usuarioPesquisa = usuarios.orderByChild("name")
+                .startAt("A")
+                .endAt("A" + "\uf8ff");
+
+
+        usuarioPesquisa.addValueEventListener(new ValueEventListener() {
+           @Override
+           public void onDataChange(@NonNull DataSnapshot snapshot) {
+               //Usuario dadosUsuario = snapshot.getValue(Usuario.class);
+              // assert dadosUsuario != null;
+              // Log.i("Dados usuario:","Nome: " +  dadosUsuario.getName() + " idade " + dadosUsuario.getIdade());
+               Log.i("Dados usuario:", Objects.requireNonNull(snapshot.getValue()).toString());
+           }
+
+           @Override
+           public void onCancelled(@NonNull DatabaseError error) {
+
+           }
+       });
+
+         /*Usuario usuario = new Usuario();
+        usuario.setName("Nathan");
         usuario.setLastname("Prado");
-        usuario.setIdade(38);
-        usuarios.push().setValue(usuario);
+        usuario.setIdade(9);
+        usuarios.push().setValue(usuario);*/
 
         /* Deslogar o usuario */
        // authUser.signOut();
